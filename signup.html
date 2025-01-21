@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup and Login Page</title>
+    <style>
+
+@font-face {
+    font-family: neu;
+    src: url("./NeueHaasDisplayMediu.ttf");
+}
+        body {
+            font-family: 'neu';
+            background-color: #EFEAE3;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+    #nav-part2{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin-left: 70%;
+    margin-right: 0%;
+}
+
+
+#nav-part2 h4{
+    padding: 10px 20px;
+    border : 1px solid #0000003b;
+    border-radius: 50px;
+    font-weight: 500;
+    color: #000000bb;
+    transition: all ease 0.4s;
+    position: relative;
+    font-size: 18px;
+    overflow: hidden;
+}
+#nav-part2 h4::after{
+    content: " ";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    left: 0;
+    bottom: -100%;
+    border-radius: 50% ;
+    transition: all ease 0.4s;
+}
+#nav-part2 h4:hover::after{
+    bottom: 0;
+    border-radius: 0;
+} 
+#nav-part2 h4 a{
+    color: #000000bb;
+    text-decoration: none;
+    position: relative;
+    z-index: 9;   
+}
+#nav-part2 h4:hover a{
+    color: #fff;
+}
+
+
+        h2 {
+            text-align: center;
+        }
+        input[type=text], input[type=email], input[type=password], input[type=tel], select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            background-color: #fe4b0a;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #fe4b0ac7;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        .remember-me input {
+            margin-right: 10px;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+        .toggle-link {
+            text-align: center;
+            margin-top: 20px;
+            cursor: pointer;
+            color: blue;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="nav-part2">
+        <h4><a href="./index.html">Home</a></h4>
+        <h4><a href="#">Blogs</a></h4>
+        <h4><a href="#">Contact Us</a></h4>
+    </div>
+
+
+<div class="container">
+    <!-- Signup Form -->
+    <div id="signupForm">
+        <h2 style="color: #22223b;">Signup</h2>
+        <div class="error" id="signupError"></div>
+
+        <label for="fullname">Full Name:</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Enter full name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="signupEmail" name="email" placeholder="Enter email address" required>
+
+        <label for="username">Username:</label>
+        <input type="text" id="signupUsername" name="username" placeholder="Enter username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="signupPassword" name="password" placeholder="Enter password" required>
+
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm password" required>
+
+        <label for="phone">Phone Number (Optional):</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter phone number">
+
+        <label for="role">User Role:</label>
+        <select id="role" name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button type="button" onclick="validateSignupForm()">Sign Up</button>
+    </div>
+
+   
+
+    <!-- Login Form -->
+    <div id="loginForm" style="display:none;">
+        <h2>Login</h2>
+        <div class="error" id="loginError"></div>
+
+        <label for="emailOrUsername">Email Address or Username:</label>
+        <input type="text" id="emailOrUsername" name="emailOrUsername" placeholder="Enter email or username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="loginPassword" name="password" placeholder="Enter password" required>
+
+        <div class="remember-me">
+            <input type="checkbox" id="rememberMe" name="rememberMe">
+            <label for="rememberMe">Remember Me</label>
+        </div>
+
+        <button type="button" onclick="validateLoginForm()">Login</button>
+    </div>
+
+    <div class="toggle-link" onclick="toggleForm()">Switch to Login</div>
+</div>
+
+<script>
+    // Simulated existing data
+    const existingEmails = ["test@example.com", "john@example.com"];
+    const existingUsernames = ["testuser", "johndoe"];
+
+    // Toggle between signup and login forms
+    function toggleForm() {
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+        const toggleLink = document.querySelector('.toggle-link');
+
+        if (signupForm.style.display === 'none') {
+            signupForm.style.display = 'block';
+            loginForm.style.display = 'none';
+            toggleLink.textContent = 'Switch to Login';
+        } else {
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            toggleLink.textContent = 'Switch to Signup';
+        }
+    }
+
+    // Validate signup form
+    function validateSignupForm() {
+        const fullname = document.getElementById('fullname').value;
+        const email = document.getElementById('signupEmail').value;
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const signupError = document.getElementById('signupError');
+
+        // Reset error message
+        signupError.textContent = '';
+
+        // Validate form fields
+        if (!fullname || !email || !username || !password || !confirmPassword) {
+            signupError.textContent = 'Please fill in all required fields.';
+            return false;
+        }
+
+        // Validate email uniqueness
+        if (existingEmails.includes(email)) {
+            signupError.textContent = 'Email is already registered.';
+            return false;
+        }
+
+        // Validate username uniqueness
+        if (existingUsernames.includes(username)) {
+            signupError.textContent = 'Username is already taken.';
+            return false;
+        }
+
+        // Validate password match
+        if (password !== confirmPassword) {
+            signupError.textContent = 'Passwords do not match.';
+            return false;
+        }
+
+        alert('Signup successful!');
+        return true;
+    }
+
+    // Validate login form
+    function validateLoginForm() {
+        const emailOrUsername = document.getElementById('emailOrUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const loginError = document.getElementById('loginError');
+
+        // Reset error message
+        loginError.textContent = '';
+
+        // Check if email/username and password are provided
+        if (!emailOrUsername || !password) {
+            loginError.textContent = 'Please enter your email/username and password.';
+            return false;
+        }
+
+        alert('Login successful!');
+        return true;
+    }
+
+    // Nav bar
+     
+
+</script>
+
+</body>
+</html>
